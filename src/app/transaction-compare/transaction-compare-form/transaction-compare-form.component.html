@@ -3,7 +3,7 @@
     <li class="breadcrumb-item active">Specify files to compare</li>
 </ol>
 <div class="container">
-    <form #TransactionCompareForm="ngForm" (ngSubmit)="onSubmit()" >
+    <form #TransactionCompareForm="ngForm"  >
 
         <div class="row">
             <div class="col-md-12">
@@ -21,7 +21,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Select file 1: </label>   
-                    <input type="file" (change)="inputFileChange1($event)" class="form-control" required>       
+                    <input type="file" (change)="inputFileChange1($event)" class="form-control" required #inputFile1>       
                 </div>
             </div>
             <div class="col-md-6">
@@ -33,7 +33,7 @@
         </div>
         <div class="row">
             <div class="col-md-2">
-                <button class="btn btn-primary" >Compare</button>
+                <button class="btn btn-primary" type="submit" (click)="onSubmit()" >Compare</button>
             </div>
         </div>
     </form>
@@ -54,7 +54,7 @@
                   <h5 class="card-title">File 1</h5>
                   <p class="card-text">Total Records: {{ responseMessage.countRecordList1 }} </p>
                   <p class="card-text">Matching Records: {{ responseMessage.countMatchRecord }} </p>
-                  <p class="card-text">UnMatched Records: {{ responseMessage.countUnMatchRecord }} </p>
+                  <p class="card-text">UnMatched Records: {{ responseMessage.countUnMatchRecord1 }} </p>
                 </div>
               </div>
             </div>
@@ -64,7 +64,7 @@
                   <h5 class="card-title">File 2</h5>
                   <p class="card-text">Total Records: {{ responseMessage.countRecordList2 }} </p>
                   <p class="card-text">Matching Records: {{ responseMessage.countMatchRecord }} </p>
-                  <p class="card-text">UnMatched Records: {{ responseMessage.countUnMatchRecord }} </p>
+                  <p class="card-text">UnMatched Records: {{ responseMessage.countUnMatchRecord2 }} </p>
                 </div>
               </div>
             </div>

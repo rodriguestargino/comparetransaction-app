@@ -2,7 +2,9 @@ export class ResponseMessage {
 
 	message! : string;
 
-	countUnMatchRecord! : number;
+	countUnMatchRecord1! : number;
+
+	countUnMatchRecord2! : number;
 	
 	countMatchRecord! : number;
 	

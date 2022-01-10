@@ -1,6 +1,6 @@
 import { ResponseMessageDetails } from './responseTransactionCompareDetails';
 import { ResponseMessage } from './responseTransactionCompare';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TransactionsCompareService } from 'src/app/transactions-compare.service';
 
 @Component({
@@ -16,14 +16,16 @@ export class TransactionCompareFormComponent implements OnInit {
 
   responseMessageDetails : ResponseMessageDetails[] = [];
 
-  errors:String[]= []
+  errors:String[]= [];
+
+  @ViewChild('inputFile1') redel!:ElementRef;
 
   constructor(private service : TransactionsCompareService) {
   }
 
   ngOnInit(): void {
   }
-
+  
   inputFileChange1(event : any){
     if(event.target.files && event.target.files[0]){
       const file = event.target.files[0];
@@ -39,19 +41,38 @@ export class TransactionCompareFormComponent implements OnInit {
   }
 
   onSubmit(){
+    
     this.service.compareTransactions(this.formData).subscribe(response => {
+      this.errors=[];
+      this.resetInput()
+
       this.responseMessage = response;
     } , errorResponse => {
         this.errors=[];
-        this.errors.push(errorResponse.error.errors);
+        
+        if(errorResponse.error.message){
+          this.errors.push(errorResponse.error.message);
+        }
+
+        if(errorResponse.error.errors){
+          this.resetInput()
+          this.errors.push(errorResponse.error.errors);
+        }
+
       }
     );
+    
   }
 
   showRecords(){
     this.service.getTransactions().subscribe(response => {
         this.responseMessageDetails = response;
     });
+  }
+
+  resetInput() {
+    this.formData.delete("file1");
+    this.formData.delete("file2");
   }
 
 }
